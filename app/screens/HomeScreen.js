@@ -10,30 +10,24 @@ function HomeScreen({ navigation }) {
     index: 0,
     actions: [NavigationActions.navigate({ routeName: "Welcome" })],
   });
-  // const [name, setName] = useState("");
-  // let currentUserUID = firebase.auth().currentUser.uid;
-  // console.log(currentUserUID);
-  // useEffect(() => {
-  //   function getUserInfo() {
-  //     const doc = firebase
-  //       .firestore()
-  //       .collection("users")
-  //       .doc(currentUserUID)
-  //       .get();
-
-  //     if (!doc.exists) {
-  //       Alert.alert("No user data found!");
-  //     } else {
-  //       const dataObj = doc.data();
-  //       setName(dataObj.name);
-  //     }
-  //   }
-  //   getUserInfo();
-  // });
-
-  // useEffect(() => {
-  //   navigation.dispatch(resetActionLogin);
-  // });
+  const [name, setName] = useState("");
+  let currentUserUID = firebase.auth().currentUser.uid;
+  useEffect(() => {
+    async function userData() {
+      const doc = await firebase
+        .firestore()
+        .collection("users")
+        .doc(currentUserUID)
+        .get();
+      if (!doc.exists) {
+        Alert.alert("No user data found!");
+      } else {
+        const dataObj = doc.data();
+        setName(dataObj.name);
+      }
+    }
+    userData();
+  }, []);
 
   const handlePress = () => {
     loggingOut();
@@ -43,8 +37,7 @@ function HomeScreen({ navigation }) {
   return (
     <View>
       <Text>Home</Text>
-      <Text>Hi </Text>
-      {/* {name} */}
+      <Text>Hi {name}</Text>
       <TouchableOpacity onPress={handlePress}>
         <Text>Log Out</Text>
       </TouchableOpacity>

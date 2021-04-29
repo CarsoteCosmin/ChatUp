@@ -5,7 +5,6 @@ import LoginScreen from "../app/screens/LoginScreen";
 import SignUpScreen from "../app/screens/SignUpScreen";
 import WelcomeScreen from "../app/screens/WelcomeScreen";
 import ForgotPasswordScreen from "../app/screens/ForgotPasswordScreen";
-import LoadingScreen from "../app/screens/LoadingScreen";
 import HomeScreen from "../app/screens/HomeScreen";
 
 const screens = {
@@ -29,12 +28,6 @@ const screens = {
   },
   ForgotPassword: {
     screen: ForgotPasswordScreen,
-    navigationOptions: {
-      headerShown: false,
-    },
-  },
-  Loading: {
-    screen: LoadingScreen,
     navigationOptions: {
       headerShown: false,
     },

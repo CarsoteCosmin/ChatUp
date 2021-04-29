@@ -5,41 +5,32 @@ import {
   View,
   SafeAreaView,
   TextInput,
-  Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import * as yup from "yup";
+import { Formik } from "formik";
 
+import Loader from "../config/Loader";
 import { registration } from "../config/firebase/firebaseMethods";
 import Colors from "../config/Colors";
 import Button from "../config/Button";
 
+const reviewSchema = yup.object({
+  userName: yup.string().required("Name is required!"),
+  email: yup
+    .string()
+    .required("Email is required!")
+    .email("Must be a valid email!"),
+  password: yup
+    .string()
+    .required("Password is required!")
+    .min(6, "Password must be at least 6 charachters!"),
+});
+
 function SignUpScreen({ navigation }) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  // const [confirmPassword, setConfirmPassword] = useState("");
-
-  const emptyState = () => {
-    setName("");
-    setEmail("");
-    setPassword("");
-    // setConfirmPassword("");
-  };
-
-  const pressHandlerSignUp = () => {
-    if (!name) {
-      Alert.alert("Name is required");
-    } else if (!email) {
-      Alert.alert("Email field is required.");
-    } else if (!password) {
-      Alert.alert("Password field is required.");
-    } else {
-      registration(email, password, name);
-      //Home
-      navigation.navigate("Home");
-      emptyState();
-    }
-  };
+  const [loading, setLoading] = useState(false);
 
   const backHandler = () => {
     navigation.pop();
@@ -50,69 +41,105 @@ function SignUpScreen({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.background}>
-      <FontAwesome5
-        onPress={backHandler}
-        style={styles.icon}
-        color="white"
-        size={30}
-        name={"arrow-left"}
-      />
-      <View style={styles.LogoContainer}>
-        <Text style={styles.title}>Welcome to</Text>
-        <Text style={styles.logoTitle}>ChatUp</Text>
-      </View>
-      <TextInput
-        style={styles.input}
-        placeholder="Name"
-        autoCompleteType={null}
-        placeholderTextColor="white"
-        autoFocus={true}
-        value={name}
-        onChangeText={(name) => setName(name)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        autoCompleteType={null}
-        placeholderTextColor="white"
-        value={email}
-        onChangeText={(email) => setEmail(email)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        autoCompleteType={null}
-        placeholderTextColor="white"
-        value={password}
-        onChangeText={(password) => setPassword(password)}
-        secureTextEntry={true}
-      />
-      <Button
-        width={330}
-        height={55}
-        borderWidth={3}
-        top={15}
-        borderRadius={8}
-        color={Colors.signUp}
-        text="SignUp"
-        onPress={pressHandlerSignUp}
-      />
-      <View>
-        <Text style={[styles.text, { top: 40 }]}>
-          Already have an account?{" "}
-          <Text
-            style={{
-              color: Colors.login,
-              fontSize: 19,
-            }}
-            onPress={pressHandlerLogin}
-          >
-            Login
-          </Text>
-        </Text>
-      </View>
-    </SafeAreaView>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <SafeAreaView style={styles.background}>
+        <FontAwesome5
+          onPress={backHandler}
+          style={styles.icon}
+          color="white"
+          size={30}
+          name={"arrow-left"}
+        />
+        <View style={styles.LogoContainer}>
+          <Text style={styles.title}>Welcome to</Text>
+          <Text style={styles.logoTitle}>ChatUp</Text>
+        </View>
+        <Formik
+          initialValues={{ userName: "", email: "", password: "" }}
+          validationSchema={reviewSchema}
+          onSubmit={(values, actions) => {
+            setLoading(true);
+            registration(
+              values.userName,
+              values.email,
+              values.password,
+              navigation
+            ).then(() => {
+              setLoading(false);
+            });
+            actions.resetForm();
+          }}
+        >
+          {(formikprops) => (
+            <View style={styles.forms}>
+              <TextInput
+                style={styles.input}
+                placeholder="Name"
+                autoCompleteType={null}
+                placeholderTextColor="white"
+                autoFocus={true}
+                onChangeText={formikprops.handleChange("userName")}
+                value={formikprops.values.userName}
+                // onBlur={formikprops.handleBlur("email")}
+              />
+              <Text style={styles.errorTextUserName}>
+                {formikprops.touched.userName && formikprops.errors.userName}
+              </Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Email"
+                autoCompleteType={null}
+                placeholderTextColor="white"
+                onChangeText={formikprops.handleChange("email")}
+                value={formikprops.values.email}
+                // onBlur={formikprops.handleBlur("email")}
+              />
+              <Text style={styles.errorTextEmail}>
+                {formikprops.touched.email && formikprops.errors.email}
+              </Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Password"
+                autoCompleteType={null}
+                placeholderTextColor="white"
+                secureTextEntry={true}
+                onChangeText={formikprops.handleChange("password")}
+                value={formikprops.values.password}
+                // onBlur={formikprops.handleBlur("password")}
+              />
+              <Text style={styles.errorTextPassword}>
+                {formikprops.touched.password && formikprops.errors.password}
+              </Text>
+              <Button
+                width={330}
+                height={55}
+                borderWidth={3}
+                top={10}
+                borderRadius={8}
+                color={Colors.signUp}
+                text="SignUp"
+                onPress={formikprops.handleSubmit}
+              />
+              <View>
+                <Text style={[styles.text, { top: 30 }]}>
+                  Already have an account?{" "}
+                  <Text
+                    style={{
+                      color: Colors.login,
+                      fontSize: 19,
+                    }}
+                    onPress={pressHandlerLogin}
+                  >
+                    Login
+                  </Text>
+                </Text>
+              </View>
+              <Loader isLoading={loading} />
+            </View>
+          )}
+        </Formik>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -123,24 +150,28 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  forms: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
   icon: {
     position: "absolute",
     top: "2%",
     left: "5%",
   },
   input: {
-    borderWidth: 2,
+    borderWidth: 3,
     borderColor: "white",
     height: 60,
     padding: 10,
-    margin: 10,
+    margin: 4,
     width: 330,
     borderRadius: 8,
     fontSize: 22,
     color: "white",
   },
   LogoContainer: {
-    bottom: "4%",
+    bottom: "1%",
     alignItems: "center",
   },
   logoTitle: {
@@ -158,6 +189,15 @@ const styles = StyleSheet.create({
   text: {
     color: "white",
     fontSize: 17,
+  },
+  errorTextUserName: {
+    color: Colors.signUp,
+  },
+  errorTextEmail: {
+    color: Colors.signUp,
+  },
+  errorTextPassword: {
+    color: Colors.signUp,
   },
 });
 export default SignUpScreen;
