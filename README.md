@@ -1,11 +1,21 @@
 # ChatUp
 
 ## Project setup
+
 ```
 npm install
 ```
 
 ### Compiles and hot-reloads for development
+
 ```
-npm start
+
+expo start --android
+```
+
+expo start --ios
+
+```
+
+expo start --web
 ```

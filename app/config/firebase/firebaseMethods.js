@@ -1,14 +1,9 @@
 import * as firebase from "firebase";
 import "firebase/firestore";
-import { NavigationActions, StackActions } from "react-navigation";
 import { Alert } from "react-native";
 
 export async function registration(name, email, password, navigation) {
   try {
-    const resetActionRegister = StackActions.reset({
-      index: 0,
-      actions: [NavigationActions.navigate({ routeName: "Home" })],
-    });
     await firebase.auth().createUserWithEmailAndPassword(email, password);
     const currentUser = firebase.auth().currentUser;
     const db = firebase.firestore();
@@ -17,7 +12,9 @@ export async function registration(name, email, password, navigation) {
       name: name,
       password: password,
     });
-    navigation.dispatch(resetActionRegister);
+    navigation.reset({
+      routes: [{ name: "Tabs" }],
+    });
   } catch (err) {
     Alert.alert("There is something wrong!!!!", err.message);
   }
@@ -25,12 +22,10 @@ export async function registration(name, email, password, navigation) {
 
 export async function signIn(email, password, navigation) {
   try {
-    const resetActionLogin = StackActions.reset({
-      index: 0,
-      actions: [NavigationActions.navigate({ routeName: "Home" })],
-    });
     await firebase.auth().signInWithEmailAndPassword(email, password);
-    navigation.dispatch(resetActionLogin);
+    navigation.reset({
+      routes: [{ name: "Tabs" }],
+    });
   } catch (err) {
     Alert.alert("Ceva gresit", "Bla bla bla", [
       {

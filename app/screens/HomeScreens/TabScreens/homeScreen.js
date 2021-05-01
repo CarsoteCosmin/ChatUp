@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Alert } from "react-native";
+import { View, Text, Alert } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import * as firebase from "firebase";
-import { loggingOut } from "../config/firebase/firebaseMethods";
-import { NavigationActions, StackActions } from "react-navigation";
+import { loggingOut } from "../../../config/firebase/firebaseMethods";
 
-function HomeScreen({ navigation }) {
-  const resetActionLogOut = StackActions.reset({
-    index: 0,
-    actions: [NavigationActions.navigate({ routeName: "Welcome" })],
-  });
+function homeScreen({ navigation }) {
   const [name, setName] = useState("");
   let currentUserUID = firebase.auth().currentUser.uid;
   useEffect(() => {
@@ -31,7 +26,9 @@ function HomeScreen({ navigation }) {
 
   const handlePress = () => {
     loggingOut();
-    navigation.dispatch(resetActionLogOut);
+    navigation.reset({
+      routes: [{ name: "Welcome" }],
+    });
   };
 
   return (
@@ -45,4 +42,4 @@ function HomeScreen({ navigation }) {
   );
 }
 
-export default HomeScreen;
+export default homeScreen;

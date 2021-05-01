@@ -11,7 +11,7 @@ import {
 import Colors from "../config/Colors";
 import Button from "../config/Button";
 
-function WelcomeScreen({ navigation }) {
+function welcomeScreen({ navigation }) {
   const pressHandlerLogin = () => {
     navigation.navigate("Login");
   };
@@ -86,4 +86,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default WelcomeScreen;
+export default welcomeScreen;

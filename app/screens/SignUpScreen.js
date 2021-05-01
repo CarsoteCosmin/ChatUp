@@ -29,7 +29,7 @@ const reviewSchema = yup.object({
     .min(6, "Password must be at least 6 charachters!"),
 });
 
-function SignUpScreen({ navigation }) {
+function signUpScreen({ navigation }) {
   const [loading, setLoading] = useState(false);
 
   const backHandler = () => {
@@ -77,7 +77,7 @@ function SignUpScreen({ navigation }) {
                 placeholder="Name"
                 autoCompleteType={null}
                 placeholderTextColor="white"
-                autoFocus={true}
+                autoFocus={false}
                 onChangeText={formikprops.handleChange("userName")}
                 value={formikprops.values.userName}
                 // onBlur={formikprops.handleBlur("email")}
@@ -200,4 +200,4 @@ const styles = StyleSheet.create({
     color: Colors.signUp,
   },
 });
-export default SignUpScreen;
+export default signUpScreen;
