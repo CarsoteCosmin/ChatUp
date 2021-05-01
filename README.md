@@ -10,11 +10,9 @@ npm install
 
 ```
 expo start --android
-```
 
 expo start --ios
 
-```
 expo start --web
 ```
 
