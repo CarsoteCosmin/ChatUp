@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Alert } from "react-native";
+import { View, Text, Alert, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import * as firebase from "firebase";
 import { loggingOut } from "../../../config/firebase/firebaseMethods";
@@ -32,7 +32,7 @@ function homeScreen({ navigation }) {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <Text>Home</Text>
       <Text>Hi {name}</Text>
       <TouchableOpacity onPress={handlePress}>
@@ -41,5 +41,13 @@ function homeScreen({ navigation }) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
 
 export default homeScreen;
