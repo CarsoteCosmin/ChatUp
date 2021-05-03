@@ -1,10 +1,31 @@
+// import React, { Component } from "react";
+// import { StyleSheet, Text, View } from "react-native";
+
+// export default class FeedScreen extends Component {
+//   render() {
+//     return (
+//       <View style={styles.container}>
+//         <Text style={{ color: "#fff" }}>Feed Screen</Text>
+//       </View>
+//     );
+//   }
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#394a6d",
+//     alignItems: "center",
+//     justifyContent: "center",
+//   },
+// });
 import React, { useEffect, useState } from "react";
 import { View, Text, Alert, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import * as firebase from "firebase";
-import { loggingOut } from "../../../config/firebase/firebaseMethods";
+import { loggingOut } from "../../../../config/firebase/firebaseMethods";
 
-function homeScreen({ navigation }) {
+export default function FeedScreen() {
   const [name, setName] = useState("");
   let currentUserUID = firebase.auth().currentUser.uid;
   useEffect(() => {
@@ -33,10 +54,10 @@ function homeScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text>Home</Text>
-      <Text>Hi {name}</Text>
+      <Text style={{ color: "white" }}>Home</Text>
+      <Text style={{ color: "white" }}>Hi {name}</Text>
       <TouchableOpacity onPress={handlePress}>
-        <Text>Log Out</Text>
+        <Text style={{ color: "white" }}>Log Out</Text>
       </TouchableOpacity>
     </View>
   );
@@ -45,9 +66,8 @@ function homeScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    backgroundColor: "#2a2b2d",
     alignItems: "center",
+    justifyContent: "center",
   },
 });
-
-export default homeScreen;

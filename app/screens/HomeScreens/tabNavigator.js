@@ -1,50 +1,25 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
-import homeScreen from "../HomeScreens/TabScreens/homeScreen";
-import profileScreen from "../HomeScreens/TabScreens/profileScreen";
-import chatsScreen from "../HomeScreens/TabScreens/chatsScreen";
-import Colors from "../../config/Colors";
+import FeedScreen from "../HomeScreens/TabScreens/screen/FeedScreen";
+import SearchScreen from "../HomeScreens/TabScreens/screen/SearchScreen";
+import ProfilScreen from "../HomeScreens/TabScreens/screen/ProfilScreen";
+import CameraScreen from "../HomeScreens/TabScreens/screen/CameraScreen";
+import LikesScreen from "../HomeScreens/TabScreens/screen/LikesScreen";
 
+import TabBar from "./destructionPathScaleRotate/components/TabBar";
 const Tab = createBottomTabNavigator();
 function tabNavigator() {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
-      tabBarOptions={{
-        showLabel: false,
-        activeTintColor: Colors.login,
-        inactiveTintColor: Colors.background,
-      }}
+      tabBar={(props) => <TabBar {...props} />}
+      initialRouteName="Feed"
     >
-      <Tab.Screen
-        name="Chat"
-        component={chatsScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name="comment" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Home"
-        component={homeScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name="home" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={profileScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name="user" color={color} size={size} />
-          ),
-        }}
-      />
+      <Tab.Screen name="Search" component={SearchScreen} />
+      <Tab.Screen name="Camera" component={CameraScreen} />
+      <Tab.Screen name="Feed" component={FeedScreen} />
+      <Tab.Screen name="Likes" component={LikesScreen} />
+      <Tab.Screen name="Profil" component={ProfilScreen} />
     </Tab.Navigator>
   );
 }
