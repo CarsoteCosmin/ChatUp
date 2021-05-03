@@ -25,7 +25,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import * as firebase from "firebase";
 import { loggingOut } from "../../../../config/firebase/firebaseMethods";
 
-export default function FeedScreen() {
+export default function FeedScreen({ navigation }) {
   const [name, setName] = useState("");
   let currentUserUID = firebase.auth().currentUser.uid;
   useEffect(() => {
