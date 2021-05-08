@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-export default class ProfilScreen extends Component {
+export default class ProfileScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={{ color: "#fff" }}>Setting Screen</Text>
+        <Text style={{ color: "#fff" }}>Profile Screen</Text>
       </View>
     );
   }

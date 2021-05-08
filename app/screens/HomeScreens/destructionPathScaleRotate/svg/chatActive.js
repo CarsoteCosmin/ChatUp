@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { Animated, Easing } from "react-native";
+import { Animated, Easing, StyleSheet } from "react-native";
 import { Svg, Path } from "react-native-svg";
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
-export default class FeedActiveIcon extends Component {
-  constructor() {
-    super();
+export default class ChatActiveIcon extends Component {
+  constructor(props) {
+    super(props);
     this.state = {
       fill: "none",
       scale: 1,
@@ -43,7 +43,7 @@ export default class FeedActiveIcon extends Component {
       }),
     });
     Animated.parallel([
-      Animated.timing(this.scaleValue, {
+      Animated.spring(this.scaleValue, {
         toValue: 2,
         useNativeDriver: true,
       }),
@@ -60,22 +60,22 @@ export default class FeedActiveIcon extends Component {
   render() {
     const offset = this.offsetValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [0, 150],
+      outputRange: [0, 125],
     });
     const { fill, scale, rotate } = this.state;
     return (
       <Animated.View style={{ transform: [{ scale }, { rotate }] }}>
-        <Svg width="31.64" height="29.69" viewBox="0 0 31.64 29.69">
+        <Svg width="24" height="24" viewBox="0 0 24 24">
           <AnimatedPath
-            d="M30.32,16.64v9.72a2,2,0,0,1-2,2H20.57a2,2,0,0,1-2-2V20.5a2.61,2.61,0,1,0-5.21,0v5.86a2,2,0,0,1-2,2H3.65a2,2,0,0,1-2-2V16.64a3.3,3.3,0,0,1,1-2.33L14.7,2.19A1.83,1.83,0,0,1,16,1.65a1.79,1.79,0,0,1,1.29.54L29.36,14.31A3.3,3.3,0,0,1,30.32,16.64Z"
-            transform="translate(-0.18 -0.15)"
+            d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+            transform="translate(-1.42 -0.45)"
             fill={fill}
             stroke="#313131"
-            strokeDasharray="150"
+            strokeDasharray="125"
             strokeDashoffset={offset}
-            strokeWidth="3"
-            origin={(31.64 / 2, 29.69 / 2)}
-            scale={0.85}
+            strokeWidth="2.5"
+            origin={(24 / 2, 24 / 2)}
+            scale={1}
           />
         </Svg>
       </Animated.View>

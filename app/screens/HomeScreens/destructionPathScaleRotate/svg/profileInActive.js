@@ -4,7 +4,7 @@ import { Svg, Path, G } from "react-native-svg";
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
-export default class ProfilInActiveIcon extends Component {
+export default class ProfileInActiveIcon extends Component {
   constructor(props) {
     super(props);
     this.offsetValue = new Animated.Value(0);

@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { Animated, Easing, StyleSheet } from "react-native";
+import { Animated, Easing } from "react-native";
 import { Svg, Path } from "react-native-svg";
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
-export default class SearchActiveIcon extends Component {
-  constructor(props) {
-    super(props);
+export default class HomeActiveIcon extends Component {
+  constructor() {
+    super();
     this.state = {
       fill: "none",
       scale: 1,
@@ -43,7 +43,7 @@ export default class SearchActiveIcon extends Component {
       }),
     });
     Animated.parallel([
-      Animated.spring(this.scaleValue, {
+      Animated.timing(this.scaleValue, {
         toValue: 2,
         useNativeDriver: true,
       }),
@@ -60,21 +60,21 @@ export default class SearchActiveIcon extends Component {
   render() {
     const offset = this.offsetValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [0, 125],
+      outputRange: [0, 150],
     });
     const { fill, scale, rotate } = this.state;
     return (
       <Animated.View style={{ transform: [{ scale }, { rotate }] }}>
-        <Svg width="29.17" height="29.09" viewBox="0 0 29.17 29.09">
+        <Svg width="31.64" height="29.69" viewBox="0 0 31.64 29.69">
           <AnimatedPath
-            d="M24,21.2A11.84,11.84,0,0,0,13.42,2a11.86,11.86,0,1,0,8.83,21l4.69,4.69a1.25,1.25,0,0,0,1.77,0h0a1.26,1.26,0,0,0,0-1.78Z"
-            transform="translate(-1.42 -0.45)"
+            d="M30.32,16.64v9.72a2,2,0,0,1-2,2H20.57a2,2,0,0,1-2-2V20.5a2.61,2.61,0,1,0-5.21,0v5.86a2,2,0,0,1-2,2H3.65a2,2,0,0,1-2-2V16.64a3.3,3.3,0,0,1,1-2.33L14.7,2.19A1.83,1.83,0,0,1,16,1.65a1.79,1.79,0,0,1,1.29.54L29.36,14.31A3.3,3.3,0,0,1,30.32,16.64Z"
+            transform="translate(-0.18 -0.15)"
             fill={fill}
             stroke="#313131"
-            strokeDasharray="125"
+            strokeDasharray="150"
             strokeDashoffset={offset}
             strokeWidth="3"
-            origin={(29.17 / 2, 29.09 / 2)}
+            origin={(31.64 / 2, 29.69 / 2)}
             scale={0.85}
           />
         </Svg>

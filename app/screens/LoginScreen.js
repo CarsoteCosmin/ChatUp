@@ -59,7 +59,7 @@ function loginScreen({ navigation }) {
           <Text style={styles.logoTitle}>ChatUp</Text>
         </View>
         <Formik
-          initialValues={{ email: "", password: "" }}
+          initialValues={{ email: "test@yahoo.com", password: "test1234" }}
           validationSchema={reviewSchema}
           onSubmit={(values, actions) => {
             setLoading(true);

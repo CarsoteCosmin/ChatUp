@@ -4,7 +4,7 @@ import { Svg, Path, G } from "react-native-svg";
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
-export default class FeedActiveIcon extends Component {
+export default class ProfileActiveIcon extends Component {
   constructor(props) {
     super(props);
     this.state = {

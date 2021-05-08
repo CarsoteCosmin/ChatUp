@@ -1,31 +1,31 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, TouchableWithoutFeedback } from "react-native";
 
-import feedActive from "../svg/feedActive";
-import feedInActive from "../svg/feedInActive";
-import searchActive from "../svg/searchActive";
-import searchInActive from "../svg/searchInActive";
+import chatActive from "../svg/chatActive";
+import chatInActive from "../svg/chatInActive";
+import cameraActive from "../svg/camerActive";
+import cameraInActive from "../svg/camerInActive";
+import homeActive from "../svg/homeActive";
+import homeInActive from "../svg/homeInActive";
 import likesActive from "../svg/likesActive";
 import likesInActive from "../svg/likesInActive";
-import profilActive from "../svg/profilActive";
-import profilInActive from "../svg/profilInActive";
-import cameraActive from "../svg/cameraActive";
-import cameraInActive from "../svg/cameraInActive";
+import profileActive from "../svg/profileActive";
+import profileInActive from "../svg/profileInActive";
 
 const tabBarIcons = {
   active: {
-    Feed: feedActive,
-    Search: searchActive,
+    Chat: chatActive,
     Camera: cameraActive,
+    Home: homeActive,
     Likes: likesActive,
-    Profil: profilActive,
+    Profile: profileActive,
   },
   inactive: {
-    Feed: feedInActive,
-    Search: searchInActive,
+    Chat: chatInActive,
     Camera: cameraInActive,
+    Home: homeInActive,
     Likes: likesInActive,
-    Profil: profilInActive,
+    Profile: profileInActive,
   },
 };
 

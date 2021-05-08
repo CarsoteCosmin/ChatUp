@@ -1,7 +1,6 @@
 import React from "react";
 import * as firebase from "firebase";
 import apiKeys from "./app/config/firebase/key";
-import {} from "react-native";
 import { LogBox } from "react-native";
 
 import Navigator from "./routes/homeStack";

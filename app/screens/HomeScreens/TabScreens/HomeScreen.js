@@ -23,11 +23,11 @@ import React, { useEffect, useState } from "react";
 import { View, Text, Alert, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import * as firebase from "firebase";
-import { loggingOut } from "../../../../config/firebase/firebaseMethods";
+import { loggingOut } from "../../../config/firebase/firebaseMethods";
 
-export default function FeedScreen({ navigation }) {
+export default function HomeScreen({ navigation }) {
   const [name, setName] = useState("");
-  let currentUserUID = firebase.auth().currentUser.uid;
+  const currentUserUID = firebase.auth().currentUser.uid;
   useEffect(() => {
     async function userData() {
       const doc = await firebase
