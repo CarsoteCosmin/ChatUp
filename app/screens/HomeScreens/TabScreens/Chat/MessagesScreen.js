@@ -13,6 +13,7 @@ export default function MessagesScreen(route) {
   const [user, setUser] = useState(null);
   const [otherUser, setOtherUser] = useState(null);
   const [id, setId] = useState();
+  const [userState, setUserState] = useState();
   const db = firebase.firestore();
   const chatsRef = db.collection("chats");
   const [messages, setMessages] = useState([]);
@@ -73,7 +74,8 @@ export default function MessagesScreen(route) {
           const name = doc.data().name;
           const _id = doc.data().id;
           const avatar = doc.data().avatar;
-          const otherUser = { name, _id, avatar };
+          const token = doc.data().token;
+          const otherUser = { name, _id, avatar, token };
           const id1 = otherUser._id + firebase.auth().currentUser.uid;
           const id2 = firebase.auth().currentUser.uid + otherUser._id;
           if (id1.localeCompare(id2) > 0) {
@@ -95,7 +97,17 @@ export default function MessagesScreen(route) {
       chatsRef.doc(id).collection("messages").add(m)
     );
     await Promise.all(writes);
-    PushNotifications();
+    firebase
+      .firestore()
+      .collection("users")
+      .where("name", "==", route.route.params.name)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          setUserState(doc.data().userState);
+        });
+      });
+    PushNotifications(otherUser.token, messages, userState);
   }
 
   const renderSend = (props) => {

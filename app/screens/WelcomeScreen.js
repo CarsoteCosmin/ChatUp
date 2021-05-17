@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   Image,
   ImageBackground,
@@ -8,10 +9,36 @@ import {
   StatusBar,
 } from "react-native";
 
+import * as firebase from "firebase";
+
+import { signIn } from "../config/firebase/firebaseMethods";
 import Colors from "../config/Colors";
 import Button from "../config/Button";
 
 function welcomeScreen({ navigation }) {
+  useEffect(() => {
+    const unlisten = firebase.auth().onAuthStateChanged(async (user) => {
+      if (user) {
+        console.log("e logat");
+        const userLoginDataJSON = await AsyncStorage.getItem("userLoginData");
+        const userLoginData = JSON.parse(userLoginDataJSON);
+        if (
+          userLoginDataJSON.email !== null &&
+          userLoginDataJSON.password !== null
+        ) {
+          console.log(userLoginData.email, userLoginData.password);
+          if (userLoginData.email !== null && userLoginData.password !== null)
+            signIn(userLoginData.email, userLoginData.password, navigation);
+        }
+      } else {
+        console.log("nu mai e");
+      }
+    });
+    return () => {
+      unlisten();
+    };
+  }, []);
+
   const pressHandlerLogin = () => {
     navigation.navigate("Login");
   };

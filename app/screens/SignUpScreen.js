@@ -156,8 +156,8 @@ const styles = StyleSheet.create({
   },
   icon: {
     position: "absolute",
-    top: "2%",
-    left: "5%",
+    top: 25,
+    left: 20,
   },
   input: {
     borderWidth: 3,

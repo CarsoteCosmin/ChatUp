@@ -1,7 +1,8 @@
 import React from "react";
-import * as firebase from "firebase";
-import apiKeys from "./app/config/firebase/key";
 import { LogBox } from "react-native";
+
+import apiKeys from "./app/config/firebase/key";
+import * as firebase from "firebase";
 
 import Navigator from "./routes/homeStack";
 
@@ -12,5 +13,7 @@ export default function App() {
     console.log("Connected with Firebase");
     firebase.initializeApp(apiKeys.firebaseConfig);
   }
+
   return <Navigator />;
 }
+// "google-services.json":"./google-services.json"

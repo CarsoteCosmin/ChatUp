@@ -1,12 +1,11 @@
 import React from "react";
-import { Easing } from "react-native";
+// import { Easing } from "react-native";
 import {
   createStackNavigator,
   // TransitionPresets,
   CardStyleInterpolators,
 } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-
 import loginScreen from "../app/screens/loginScreen";
 import signUpScreen from "../app/screens/signUpScreen";
 import welcomeScreen from "../app/screens/welcomeScreen";

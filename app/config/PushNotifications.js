@@ -118,6 +118,7 @@
 import Constants from "expo-constants";
 import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
+import * as firebase from "firebase";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -127,21 +128,28 @@ Notifications.setNotificationHandler({
   }),
 });
 
-export async function PushNotifications() {
-  registerForPushNotificationsAsync();
-  console.log("aici");
-  schedulePushNotification();
+export async function PushNotifications(props, messages, userState) {
+  // registerForPushNotificationsAsync();
+  // schedulePushNotification();
+  otherUserToken(props, messages, userState);
 }
 
-async function schedulePushNotification() {
-  await Notifications.scheduleNotificationAsync({
-    content: {
-      title: "New messages!",
-      body: "Poate de la comini hi hi.",
-      data: { data: "goes here" },
-    },
-    trigger: { seconds: 1 },
-  });
+function otherUserToken(props, messages, userState) {
+  if (userState === "background") {
+    let response = fetch("https://exp.host/--/api/v2/push/send", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        to: props,
+        sound: "default",
+        title: "New message",
+        body: messages[0].text,
+      }),
+    });
+  }
 }
 
 export async function registerForPushNotificationsAsync() {
@@ -160,7 +168,6 @@ export async function registerForPushNotificationsAsync() {
       return;
     }
     token = (await Notifications.getExpoPushTokenAsync()).data;
-    console.log(token);
   } else {
     alert("Must use physical device for Push Notifications");
   }
